@@ -1,0 +1,150 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="icon" href="data:;base64,=" />
+	<title>Simple js-lzma demo</title>
+	<script src="../src/lzma.js"></script>
+	<script src="../src/lzmasm.js" async></script>
+	<script src="../src/lzma.shim.js"></script>
+	<script src="../libs/digest.md5.js"></script>
+</head>
+<body>
+	<script>
+
+    var ceilHeapSize = function (v) {
+      // The asm.js spec says:
+      // The heap object's byteLength must be either
+      // 2^n for n in [12, 24) or 2^24 * n for n ≥ 1.
+      var p;
+      // If v is smaller than 2^12, the smallest possible solution
+      // is 2^12.
+      if (v <= 4096) return 4096;
+      // If v < 2^24, we round up to 2^n,
+      // otherwise we round up to 2^24 * n.
+      if (v < 16777216) {
+        for (p = 1; p < v; p = p << 1);
+      } else {
+        for (p = 16777216; p < v; p += p);
+      }
+      return p;
+     };
+
+window.onload = function() {
+
+	var oReq = new XMLHttpRequest();
+	oReq.open("GET", '../benchmark/data/stars.pos.db.lzma', true);
+	oReq.responseType = "arraybuffer";
+	oReq.onload = function(oEvent)
+	{
+		var buffer = oReq.response;
+
+var t0 = performance.now();
+
+		var array = new Uint8Array(buffer);
+
+		var result = '';
+		var position = 0;
+
+		var value = array[0];
+		var lc = value % 9;
+		value = ~~(value / 9);
+		var lp = value % 5;
+		var pb = ~~(value / 5);
+
+		var coders = 1 << (lp + lc);
+
+		var _dictionarySize = array[1];
+		_dictionarySize |= array[2] << 8;
+		_dictionarySize |= array[3] << 16;
+		_dictionarySize += array[4] * 16777216;
+		_dictionarySize = Math.max(_dictionarySize, 1);
+
+		var _outSize = array[5];
+		_outSize |= array[6] << 8;
+		_outSize |= array[7] << 16;
+		_outSize += array[8] * 16777216;
+		_outSize = Math.max(_outSize, 0);
+
+		var _windowSize = Math.max(_dictionarySize, 4096);
+		var _heapSize = ceilHeapSize(65536 + _windowSize);
+		var heap = new ArrayBuffer(_heapSize);
+		var Uint16 = new Uint16Array(heap);
+		Uint16.fill(1024, 0, 3180 + coders * 768);
+
+    // this.setDictionarySize(dictionarySize);
+
+  if (_dictionarySize < 0) {
+    throw "Incorrect dictionary size";
+  }
+
+
+		// console.log('start');
+		// console.profile("LZMA decompress");
+		console.log('start')
+		// console.profile("LZMAS decompress");
+		var md5 = new MD5();
+
+		var crc = 0xffffffff;
+		var first = false;
+		var counter = 0;
+		var bytes = [], pos = 13;
+		var fast = LZMASM(window, {
+			outSize: _outSize,
+			lp: lp, lc: lc, pb: pb,
+			windowSize: _windowSize,
+			dictionarySize: _dictionarySize,
+			readByte: function() {
+				return array[pos++]
+			},
+			writeBytes: function (buffer, off, size) {
+				for (var i = 0; i < size; i ++) {
+					crc ^= buffer[off+i];
+					md5.addByte(buffer[off+i]);
+				}
+			},
+			writeByte: function (b) {
+				crc ^= b;
+				md5.addByte(b);
+				// counter ++;
+				// if ((counter % (1024*128)) == 1) console.log('write');
+				// if (first === false) {
+				// 	first = b;
+				// }
+				// bytes.push(b);
+			},
+			mul: function(a,b) {
+				return a*b;
+			}
+			// qwe: new Uint8Array(100)
+		}, heap), str = '';
+		fast.init(lc, lp, pb);
+var t1 = performance.now();
+		fast.decode();
+var t2 = performance.now();
+console.log("decoded in " + (t2 - t1) + " milliseconds.")
+
+		console.log("MD5", md5.getHex());
+
+		window.setTimeout(function () {
+			// console.profileEnd("LZMAS decompress");
+		}, 0)
+		// alert(fast);
+		// console.log(bytes);
+		// var crc = 0xffffffff;
+		// for (var i = 0; i < bytes.length; i++) {
+		  // crc ^= bytes[i];
+		  // str += String.fromCharCode(fast.result[i]);
+		// }
+		console.log('done', crc);
+		// console.profileEnd();
+
+var t3 = performance.now();
+console.log("took " + (t3 - t0) + " milliseconds.")
+
+	};
+	oReq.send();
+
+};
+	</script>
+</body>
+</html>
