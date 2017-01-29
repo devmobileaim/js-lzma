@@ -31,7 +31,7 @@ var WLZMA = WLZMA || {};
 
   "use strict";
 
-  var wrkurl = "src/wlzma.wrk.js";
+  var wrkurl = "wlzma.wrk.min.js";
 
   // create manager to schedule work
   // allocate a fixed amount of threads
