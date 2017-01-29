@@ -40,13 +40,28 @@
 
 		<!-- include library files -->
 		<input path="src/lzma.js" />
+
+		<prefix path="conf/license.header.txt" target="compile" />
+		<!-- generate different output versions -->
+		<output path="build/lzma.src.js" target="join" />
+		<output path="build/lzma.min.js" target="compile" />
+
+	</js>
+
+
+	<!-- main merge operations -->
+	<js id="lzmap" step="build" >
+
+		<!-- include library files -->
+		<input path="src/lzma.js" />
 		<input path="src/lzmap.js" />
 		<input path="src/lzma.shim.js" />
 		<input path="libs/utf8.decode.js" />
 
+		<prefix path="conf/license.header.txt" target="compile" />
 		<!-- generate different output versions -->
-		<output path="build/lzma.src.js" target="join" />
-		<output path="build/lzma.min.js" target="compile" />
+		<output path="build/lzmap.src.js" target="join" />
+		<output path="build/lzmap.min.js" target="compile" />
 
 	</js>
 
@@ -58,6 +73,7 @@
 		<input path="libs/utf8.decode.js" />
 		<input path="src/wlzma.js" />
 
+		<prefix path="conf/license.header.txt" target="compile" />
 		<!-- generate different output versions -->
 		<output path="build/wlzma.src.js" target="join" />
 		<output path="build/wlzma.min.js" target="compile" />
@@ -73,6 +89,7 @@
 		<!-- include library files -->
 		<input path="src/pwlzma.js" />
 
+		<prefix path="conf/license.header.txt" target="compile" />
 		<!-- generate different output versions -->
 		<output path="build/pwlzma.src.js" target="join" />
 		<output path="build/pwlzma.min.js" target="compile" />
@@ -87,8 +104,9 @@
 		<input path="src/lzma.shim.js" />
 		<input path="src/wlzma.wrk.js" />
 
+		<prefix path="conf/license.header.txt" target="compile" />
 		<!-- generate different output versions -->
-		<output path="build/wlzma.wrk.js" target="compile" />
+		<output path="build/wlzma.wrk.min.js" target="compile" />
 		<output path="build/wlzma.wrk.src.js" target="join" />
 
 	</js>

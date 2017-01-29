@@ -1,0 +1,5 @@
+/*
+JavaScript LZMA Decompressor (https://github.com/jcmellado/js-lzma)
+- Copyright (c) 2017 Juan Mellado (https://github.com/jcmellado)
+- Copyright (c) 2017 Marcel Greter (http://github.com/mgreter)
+*/
