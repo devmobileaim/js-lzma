@@ -1,0 +1,96 @@
+<xml>
+
+	<!-- include default configuration file (relative to this file) -->
+	<include src="{EXT}/conf/common.conf.xml" />
+
+	<!-- default configuration -->
+	<config>
+
+		<!-- where is your htdocs root directory -->
+		<!-- this is needed to create absolute urls -->
+		<!-- default is relative to the config file -->
+		<webroot>{CONF}/..</webroot>
+
+		<!-- define a current working directory -->
+		<!-- you can adjust this also in the xml config -->
+		<directory>{WWW}</directory>
+
+		<!-- disable headers -->
+		<headtmpl></headtmpl>
+
+		<!-- disable crc file -->
+		<crc-file>0</crc-file>
+
+		<!-- disable comments -->
+		<crc-comment>0</crc-comment>
+		<head-comment>0</head-comment>
+
+	</config>
+
+	<!-- prepare operations -->
+	<prepare step="prepare" disabled="false" >
+
+		<!-- create neccessary paths -->
+		<mkdir path="build" />
+
+	</prepare>
+
+	<!-- main merge operations -->
+	<js id="lzma" step="build" >
+
+		<!-- include library files -->
+		<input path="src/lzma.js" />
+		<input path="src/lzmap.js" />
+		<input path="src/lzma.shim.js" />
+		<input path="libs/utf8.decode.js" />
+
+		<!-- generate different output versions -->
+		<output path="build/lzma.src.js" target="join" />
+		<output path="build/lzma.min.js" target="compile" />
+
+	</js>
+
+	<!-- main merge operations -->
+	<js id="wlzma" step="build" >
+
+		<!-- include library files -->
+		<input path="src/lzma.shim.js" />
+		<input path="libs/utf8.decode.js" />
+		<input path="src/wlzma.js" />
+
+		<!-- generate different output versions -->
+		<output path="build/wlzma.src.js" target="join" />
+		<output path="build/wlzma.min.js" target="compile" />
+
+	</js>
+
+	<!-- main merge operations -->
+	<js id="pwlzma" step="build" >
+
+		<!-- include library files -->
+		<input id="wlzma" />
+
+		<!-- include library files -->
+		<input path="src/pwlzma.js" />
+
+		<!-- generate different output versions -->
+		<output path="build/pwlzma.src.js" target="join" />
+		<output path="build/pwlzma.min.js" target="compile" />
+
+	</js>
+
+	<!-- main merge operations -->
+	<js id="wlzma.wrk" step="build" >
+
+		<!-- include library files -->
+		<input path="src/lzma.js" />
+		<input path="src/lzma.shim.js" />
+		<input path="src/wlzma.wrk.js" />
+
+		<!-- generate different output versions -->
+		<output path="build/wlzma.wrk.js" target="compile" />
+		<output path="build/wlzma.wrk.src.js" target="join" />
+
+	</js>
+
+</xml>
