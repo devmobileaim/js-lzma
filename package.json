@@ -8,6 +8,9 @@
 		"email": "misha.cn.ua@gmail.com"
 	}],
 	"main": "src/lzma.js",
+	"dependencies": {
+   	 	"lzmashim": "file:src/lzma-shim.js"
+  	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Magister/js-lzma"
