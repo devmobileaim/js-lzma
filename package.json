@@ -1,6 +1,6 @@
 {
 	"name": "js-lzma",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "js-lzma is a port of the LZMA decompression algorithm to JavaScript",
 	"author": "jcmellado <jcmellado@gmail.com>",
 	"contributors": [{
