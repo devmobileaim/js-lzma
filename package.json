@@ -1,0 +1,22 @@
+{
+	"name": "js-lzma",
+	"version": "0.1.0",
+	"description": "js-lzma is a port of the LZMA decompression algorithm to JavaScript",
+	"author": "jcmellado <jcmellado@gmail.com>",
+	"contributors": [{
+		"name": "Misha Padalka",
+		"email": "misha.cn.ua@gmail.com"
+	}],
+	"main": "src/lzma.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Magister/js-lzma"
+	},
+	"bugs": {
+		"url": "https://github.com/Magister/js-lzma/issues"
+	},
+	"keywords": [
+		"lzma"
+	],
+	"license": "MIT"
+}
