@@ -785,4 +785,7 @@ var LZMA = LZMA || {};
     return string;
   }
 
+  if (typeof module != 'undefined' && module.exports) {
+    module.exports = LZMA;
+  }
 })(LZMA);
